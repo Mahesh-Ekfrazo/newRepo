@@ -1,0 +1,31 @@
+import { test, expect } from '@playwright/test';
+import { faker } from '@faker-js/faker';
+
+test('test', async ({ page }) => {
+  await page.goto('https://vlp.thestorywallcafe.com/login');
+  await page.getByRole('textbox', { name: 'Email Address*' }).click();
+  await page.getByRole('textbox', { name: 'Email Address*' }).fill('sandesh@ekfrazo.in');
+  await page.getByRole('textbox', { name: 'Email Address*' }).press('Tab');
+  await page.getByRole('textbox', { name: 'Password*' }).fill('1234');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await page.getByRole('navigation').getByText('Settings').click();
+  await page.getByRole('navigation').locator('mat-list-item').filter({ hasText: 'Employees' }).click();
+  await page.getByRole('button', { name: 'Create Employee' }).click();
+  await page.locator('.ngx-overlay').click();
+  await page.getByRole('textbox', { name: 'First Name *' }).fill(faker.person.firstName());
+  await page.getByRole('textbox', { name: 'Last Name *' }).click();
+  await page.getByRole('textbox', { name: 'Last Name *' }).fill(faker.person.lastName());
+  await page.getByRole('textbox', { name: 'Email Id *' }).click();
+  await page.getByRole('textbox', { name: 'Email Id *' }).fill(faker.internet.email());
+  await page.getByRole('textbox', { name: 'Start Date *' }).click();
+  await page.getByRole('textbox', { name: 'Start Date *' }).fill('');
+  await page.locator('mat-form-field').filter({ hasText: 'Start Date *' }).getByLabel('Open calendar').click();
+  await page.getByText('1', { exact: true }).click();
+  await page.locator('div').filter({ hasText: /^Role \*$/ }).nth(3).click();
+  await page.getByText('Accountant').click();
+  await page.getByLabel('Designation *').getByText('Designation').click();
+  await page.getByText('Jr Accountant').click();
+  await page.getByLabel('Reporting Manager').getByText('Reporting Manager').click();
+  await page.getByText('vigna E').click();
+  await page.getByRole('button', { name: 'Submit' }).click();
+});
